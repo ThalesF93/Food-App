@@ -1,0 +1,24 @@
+server:
+  port: ${SERVER_PORT:8081}
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/food-app
+    username: postgres
+    password: 123456
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # Pode ser create, create-drop, update ou validate
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # (Opcional) Definir nome da aplicação
+  application:
+    name: food-app
+
+  flyway:
+    enabled: true
