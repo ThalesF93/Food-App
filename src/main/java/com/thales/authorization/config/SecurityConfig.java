@@ -49,10 +49,10 @@ public class SecurityConfig {
                 .sessionManagement(session
                         -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "").permitAll()
-                        .requestMatchers(HttpMethod.POST, "").permitAll()
-                        .requestMatchers(HttpMethod.GET, "").permitAll()
-                        .requestMatchers(HttpMethod.GET, "").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/register/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/login/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth/register/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(AbstractHttpConfigurer::disable)//form -> form.disable()
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

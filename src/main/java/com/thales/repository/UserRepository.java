@@ -11,4 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Evita N+1: carrega usuário já com roles
     @EntityGraph(attributePaths = "roles")
     Optional<User> findByUsername(String username);
+
 }
