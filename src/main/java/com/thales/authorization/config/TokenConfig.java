@@ -4,6 +4,7 @@ package com.thales.authorization.config;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.thales.authorization.entities.Roles;
 import com.thales.authorization.entities.User;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,12 @@ public class TokenConfig {
     Algorithm algorithm = Algorithm.HMAC256(secret);
 
     public String generateToken(User user){
+
+        //Converte a lista de roles para string
+        List<String> roleNames = user.getRoles().stream().map(Roles::getRole).toList();
+
         return JWT.create()
-                .withClaim("roles", user.getRoles())
+                .withClaim("roles", roleNames)
                 .withClaim("id", user.getId())
                 .withSubject(user.getUsername())
                 .withIssuedAt(Instant.now())
