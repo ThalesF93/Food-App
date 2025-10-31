@@ -1,6 +1,5 @@
 package com.thales.authorization.entities;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import lombok.Data;
 

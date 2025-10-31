@@ -3,6 +3,7 @@ package com.thales.authorization.service;
 import com.thales.authorization.dto.RegisterDTO;
 import com.thales.authorization.entities.Roles;
 import com.thales.authorization.entities.User;
+import com.thales.exceptions.UserNotFoundException;
 import com.thales.repository.RolesRepository;
 import com.thales.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -57,7 +59,25 @@ public class UserService {
         var roles = rolesRepository.findByRoleIn(dto.roles());
         user.setRoles(new ArrayList<>(roles));
 
-
         userRepository.save(user);
     }
+
+    public Optional<User> findUserByUsername(User user){
+        return userRepository.findByUsername(user.getUsername());
+
+    }
+
+    public Optional<User> findUserById(Optional<User> user){
+        return userRepository.findById(user.get().getId());
+
+    }
+
+    public void deleteUser(Long id){
+        var user = userRepository.findById(id);
+        if (user.isEmpty()){
+            throw new UserNotFoundException("User not found!");
+        }
+        userRepository.deleteById(id);
+    }
+
 }
